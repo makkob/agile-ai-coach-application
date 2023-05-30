@@ -1,12 +1,42 @@
-import { NestFactory } from "@nestjs/core";
-import { AppModule } from "./app.module";
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import { IoAdapter } from '@nestjs/platform-socket.io';
+import { Server, Socket } from 'socket.io';
 
 async function start() {
-    const PORT = process.env.PORT || 5000;
-    const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule);
+  const server = app.getHttpServer();
+  const io = new Server(server, {
+    cors: {
+      origin: '*',
+      methods: ['GET', 'POST'],
+      allowedHeaders: ['Content-Type'],
+    },
+  });
+  const ioAdapter = new IoAdapter(io);
+  app.useWebSocketAdapter(ioAdapter);
 
-    await app.listen(PORT , ()=>console.log(`Server started on port = ${PORT}`));
-    
+  // Додайте обробник події 'connection'
+  io.on('connection', (socket: Socket) => {
+    console.log('Client connected:', socket.id);
+
+    // Обробка події 'message' від клієнта
+    socket.on('message', (message: string) => {
+      console.log('Received message from client:', message);
+
+      // Обробка повідомлення і відправка відповіді клієнту
+      const response = 'This is the response from the server';
+      socket.emit('response', response);
+    });
+
+    // Обробка події відключення клієнта
+    socket.on('disconnect', () => {
+      console.log('Client disconnected:', socket.id);
+    });
+  });
+
+  await app.listen(8000);
+  console.log('Server is running');
 }
 
-start()
+start();
