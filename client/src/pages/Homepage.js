@@ -1,11 +1,10 @@
 import React from "react";
-import Dialog from "../components/Dialog";
+import ChatWindow from "../components/ChatWindow";
 
 export default function Homepage() {
   return (
     <>
-      <div>Homepage</div>
-      <Dialog />
+      <ChatWindow />
     </>
   );
 }

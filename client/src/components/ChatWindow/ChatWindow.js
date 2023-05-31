@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
+import SendIcon from "@mui/icons-material/Send";
+import styles from "./ChatWindow.module.css";
 
 export default function DialogComponent() {
   const [inputValue, setInputValue] = useState("");
@@ -14,6 +16,7 @@ export default function DialogComponent() {
     // Прослуховування події 'message' від сервера
     socket.on("message", (data) => {
       setDialog([...dialog, { sender: "server", message: data }]);
+      console.log(data);
     });
 
     // Відключення від сервера при розмонтовуванні компонента
@@ -38,18 +41,21 @@ export default function DialogComponent() {
   };
 
   return (
-    <div>
-      <h2>Dialog Window</h2>
-      <div>
+    <div className={styles.container}>
+      <div>AGILE</div>
+      <div className={styles.chatWindow}>
         {dialog.map((item, index) => (
           <p key={index}>
             <strong>{item.sender}: </strong>
             {item.message}
           </p>
         ))}
+
+        <input type="text" value={inputValue} onChange={handleChange} />
+        <button onClick={handleSubmit}>
+          <SendIcon />
+        </button>
       </div>
-      <input type="text" value={inputValue} onChange={handleChange} />
-      <button onClick={handleSubmit}>Відправити</button>
     </div>
   );
 }

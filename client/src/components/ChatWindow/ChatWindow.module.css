@@ -1,0 +1,44 @@
+/* gray #dcdcdc
+Light blue #d8e1ed
+white #f9f9f9 */
+:root {
+  --gray: #dcdcdc;
+  --light-blue: #d8e1ed;
+  --white: #f9f9f9;
+  --border-blue: #44acf7
+}
+
+.container {
+  width: 90%; /* Set a relative width as a percentage */
+  max-width: 1440px; /* Set a maximum width for larger screens */
+  margin: 0 auto; /* Center the container horizontally */
+  background-color: var(--light-blue);
+  height: 49rem;
+  display: grid;
+  grid-template-columns: 1.5fr 7fr;
+  align-items: center;
+  border: 2px solid var(--border-blue);
+ 
+}
+
+@media screen and (min-width: 768px) {
+  /* Apply different styles for screens with a minimum width of 768px */
+  .container {
+    width: 80%; /* Adjust the width for larger screens */
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  /* Apply different styles for screens with a minimum width of 1024px */
+  .container {
+    width: 70%; /* Adjust the width for even larger screens */
+  }
+}
+
+.chatWindow{
+    background-color: var(--white);
+    height: 45rem;
+    overflow-y: scroll;
+    border-top-left-radius: 40px;
+    border-bottom-left-radius: 40px;
+}
