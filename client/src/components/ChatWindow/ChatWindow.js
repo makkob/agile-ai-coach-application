@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
+// import { useDispatch, useSelector } from "react-redux";
 import SendIcon from "@mui/icons-material/Send";
 import styles from "./ChatWindow.module.css";
+// import { setDialog } from "../../actions/dialogAction";
 
 export default function DialogComponent() {
+  // const dispatch = useDispatch();
+
+  // const { dialogState } = useSelector((state) => state);
+  // const { loading, dialo } = dialogState;
+
   const [inputValue, setInputValue] = useState("");
   const [dialog, setDialog] = useState([]);
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
+    // dispatch(setDialog("pizza"));
     // Подключение к серверу Socket.IO при монтировании компонента
     const socket = io("http://localhost:8000");
     setSocket(socket);
