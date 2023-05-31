@@ -2,7 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { Server, Socket } from 'socket.io';
-
+/////////////////////////
+import {onOpenAI} from "./service"
+/////////////////////////////////
 async function start() {
   const app = await NestFactory.create(AppModule);
   const server = app.getHttpServer();
@@ -21,9 +23,9 @@ async function start() {
     console.log('Client connected:', socket.id);
 
     // Обробка події 'message' від клієнта
-    socket.on('message', (message: string) => {
-      console.log('Received message from client:', message);
-
+    socket.on('message',async (message: string) => {
+      console.log('Received message from client:', message , "Socet id :" , socket.id);
+      await onOpenAI(message);
       // Обробка повідомлення і відправка відповіді клієнту
       const response = 'This is the response from the server';
       socket.emit('response', response);
@@ -37,6 +39,8 @@ async function start() {
 
   await app.listen(8000);
   console.log('Server is running');
+  /////////////////////////////////////////////
+  
 }
 
 start();
