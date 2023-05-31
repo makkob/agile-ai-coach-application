@@ -25,7 +25,7 @@ async function start() {
     // Обробка події 'message' від клієнта
     socket.on('message',async (message: string) => {
       console.log('Received message from client:', message , "Socet id :" , socket.id);
-      let response= await onOpenAI(message);
+      let response = await onOpenAI(message);
       // Обробка повідомлення і відправка відповіді клієнту
       // const response = 'This is the response from the server';
       socket.emit('message', response);

@@ -9,17 +9,19 @@ export default function DialogComponent() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    // Підключення до сервера Socket.IO при монтуванні компонента
+    // Подключение к серверу Socket.IO при монтировании компонента
     const socket = io("http://localhost:8000");
     setSocket(socket);
 
-    // Прослуховування події 'message' від сервера
+    // Прослушивание события 'message' от сервера
     socket.on("message", (data) => {
-      setDialog([...dialog, { sender: "server", message: data }]);
-      console.log(data);
+      setDialog((prevDialog) => [
+        ...prevDialog,
+        { sender: "server", message: data },
+      ]);
     });
 
-    // Відключення від сервера при розмонтовуванні компонента
+    // Отключение от сервера при размонтировании компонента
     return () => {
       socket.close();
     };
@@ -30,13 +32,16 @@ export default function DialogComponent() {
   };
 
   const handleSubmit = () => {
-    // Додаємо значення інпуту до діалогу
-    setDialog([...dialog, { sender: "user", message: inputValue }]);
+    // Добавление значения инпута в диалог
+    setDialog((prevDialog) => [
+      ...prevDialog,
+      { sender: "user", message: inputValue },
+    ]);
 
-    // Відправка повідомлення на сервер
+    // Отправка сообщения на сервер
     socket.emit("message", inputValue);
 
-    // Очищаємо значення інпуту
+    // Очистка значения инпута
     setInputValue("");
   };
 

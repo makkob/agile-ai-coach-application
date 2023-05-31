@@ -16,17 +16,17 @@ export async function onOpenAI(text) {
     // model: "gpt-3.5-turbo",
     prompt: text,
     max_tokens: 800,
-    temperature: 0.6,
+    temperature: 0.8,
     top_p: 0.5,
     n: 2,
     stream: false,
     logprobs: null,
-    stop: "\n"
+    // stop: "\n"
   });
-  // console.log(
-  //   "completion.data.choices[0].text",
-  //   completion.data.choices[0].text
-  // );
+  console.log(
+    "completion.data.choices[0].text",
+    completion.data.choices[0].text
+  );
 //   console.log(
 //     "completion",
 //     completion.data

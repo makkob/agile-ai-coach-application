@@ -5,7 +5,7 @@ white #f9f9f9 */
   --gray: #dcdcdc;
   --light-blue: #d8e1ed;
   --white: #f9f9f9;
-  --border-blue: #44acf7
+  --border-blue: #44acf7;
 }
 
 .container {
@@ -18,7 +18,7 @@ white #f9f9f9 */
   grid-template-columns: 1.5fr 7fr;
   align-items: center;
   border: 2px solid var(--border-blue);
- 
+  padding: 28px;
 }
 
 @media screen and (min-width: 768px) {
@@ -35,10 +35,11 @@ white #f9f9f9 */
   }
 }
 
-.chatWindow{
-    background-color: var(--white);
-    height: 45rem;
-    overflow-y: scroll;
-    border-top-left-radius: 40px;
-    border-bottom-left-radius: 40px;
+.chatWindow {
+  background-color: var(--white);
+  height: 45rem;
+  overflow-y: scroll;
+  border-top-left-radius: 40px;
+  border-bottom-left-radius: 40px;
+  padding: 28px;
 }
