@@ -9,7 +9,7 @@ export default function DialogComponent() {
   // const dispatch = useDispatch();
 
   // const { dialogState } = useSelector((state) => state);
-  // const { loading, dialo } = dialogState;
+  // const { loading, dialog } = dialogState;
 
   const [inputValue, setInputValue] = useState("");
   const [dialog, setDialog] = useState([]);
@@ -57,12 +57,13 @@ export default function DialogComponent() {
     <div className={styles.container}>
       <div>AGILE</div>
       <div className={styles.chatWindow}>
-        {dialog.map((item, index) => (
-          <p key={index}>
-            <strong>{item.sender}: </strong>
-            {item.message}
-          </p>
-        ))}
+        {dialog &&
+          dialog.map((item, index) => (
+            <p key={index}>
+              <strong>{item.sender}: </strong>
+              {item.message}
+            </p>
+          ))}
 
         <input type="text" value={inputValue} onChange={handleChange} />
         <button onClick={handleSubmit}>
