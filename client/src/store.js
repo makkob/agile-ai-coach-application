@@ -8,7 +8,11 @@ let rootReducer = combineReducers({
 });
 
 const initialState = {
-  dialogState: [],
+  dialogState: {
+    dialog: [],
+    loading: false,
+    error: null,
+  },
 };
 
 const middleware = [thunk];

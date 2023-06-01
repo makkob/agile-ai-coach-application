@@ -6,4 +6,4 @@ export class AppController {
     getUsers(){
         return [{id:1 , name:"Max"}]
     }
-}    
+}       

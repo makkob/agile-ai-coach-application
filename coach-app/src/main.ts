@@ -20,16 +20,17 @@ async function start() {
 
   // Додайте обробник події 'connection'
   io.on('connection', (socket: Socket) => {
-    console.log('Client connected:', socket.id);
+    console.log('Client connected:', socket.id); 
 
     // Обробка події 'message' від клієнта
     socket.on('message',async (message: string) => {
       console.log('Received message from client:', message , "Socet id :" , socket.id);
-      let response = await onOpenAI(message);
+
+      // const response =  await onOpenAI(message);
       // Обробка повідомлення і відправка відповіді клієнту
-      // const response = 'This is the response from the server';
+      const response = 'This is the response from the server ZAGLUSHKA';
       socket.emit('message', response);
-    });
+    }); 
 
     // Обробка події відключення клієнта
     socket.on('disconnect', () => {
