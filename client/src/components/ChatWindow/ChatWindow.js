@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { useDispatch, useSelector } from "react-redux";
 import SendIcon from "@mui/icons-material/Send";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { Button, TextField } from "@mui/material";
 import styles from "./ChatWindow.module.css";
 import { setDialog } from "../../actions/dialogAction";
+import { Container } from "@mui/system";
 
 export default function DialogComponent() {
   const dispatch = useDispatch();
@@ -16,17 +19,11 @@ export default function DialogComponent() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    // dispatch(setDialog("pizza"));
-    // Подключение к серверу Socket.IO при монтировании компонента
     const socket = io("http://localhost:8000");
     setSocket(socket);
 
     // Прослушивание события 'message' от сервера
     socket.on("message", (data) => {
-      // setDialogHOOK((prevDialog) => [
-      //   ...prevDialog,
-      //   { sender: "server", message: data },
-      // ]);
       dispatch(setDialog(data));
     });
 
@@ -41,11 +38,8 @@ export default function DialogComponent() {
   };
 
   const handleSubmit = () => {
-    // Добавление значения инпута в диалог
-    // setDialogHOOK((prevDialog) => [
-    //   ...prevDialog,
-    //   { sender: "user", message: inputValue },
-    // ]);
+    // Добавление значения инпута в стейт
+
     dispatch(setDialog(inputValue));
     // Отправка сообщения на сервер
     socket.emit("message", inputValue);
@@ -56,20 +50,36 @@ export default function DialogComponent() {
 
   return (
     <div className={styles.container}>
-      <div>AGILE</div>
-      <div className={styles.chatWindow}>
+      <div className={styles.logo}>
+        <strong>AGILE</strong>
+        <div className={styles.AIAgileCoach}>
+          <FavoriteBorderIcon sx={{ fontSize: 30, marginRight: "1rem" }} />{" "}
+          <b>AI Agile Coach</b>
+        </div>
+      </div>
+      <div className={styles.chatWindow} id="chat-window">
+        {loading && <p>Coach is typing...</p>}
         {dialog &&
           dialog.map((item, index) => (
-            <p key={index}>
+            // <p key={index} className={styles.speechBubbleUser}>
+            <p key={index} className={styles.speechBubbleAI}>
               <strong>{item.sender}: </strong>
               {item.message}
             </p>
           ))}
-
-        <input type="text" value={inputValue} onChange={handleChange} />
-        <button onClick={handleSubmit}>
+      </div>
+      <div className={styles.inputDiv}>
+        <TextField
+          type="text"
+          value={inputValue}
+          onChange={handleChange}
+          placeholder="Ask me anything that I can help you or your team..."
+          variant="outlined"
+          fullWidth
+        />
+        <Button onClick={handleSubmit}>
           <SendIcon />
-        </button>
+        </Button>
       </div>
     </div>
   );
