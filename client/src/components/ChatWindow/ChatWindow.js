@@ -19,7 +19,7 @@ export default function DialogComponent() {
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
-    const socket = io("http://localhost:8000");
+    const socket = io("http://localhost:5000");
     setSocket(socket);
 
     // Прослушивание события 'message' от сервера

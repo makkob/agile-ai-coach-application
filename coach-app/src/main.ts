@@ -2,9 +2,9 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { Server, Socket } from 'socket.io';
-/////////////////////////
+
 import {onOpenAI} from "./service"
-/////////////////////////////////
+
 async function start() {
   const app = await NestFactory.create(AppModule);
   const server = app.getHttpServer();
@@ -38,9 +38,9 @@ async function start() {
     });
   });
 
-  await app.listen(8000);
+  await app.listen(5000);
   console.log('Server is running');
-  /////////////////////////////////////////////
+ 
   
 }
 
