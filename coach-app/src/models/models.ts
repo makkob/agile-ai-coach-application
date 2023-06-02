@@ -14,19 +14,12 @@ const Masage = sequelize.define('basket', {
     masage:{ type: DataTypes.STRING },
     author:{type: DataTypes.STRING},
     userId:{type: DataTypes.INTEGER},
-    type:{type: DataTypes.STRING},
+    type:{type: DataTypes.STRING}, 
 });
-
-
-
 
 
 User.hasMany(Masage);
 Masage.belongsTo(User);
-
-
-
-
 
 module.exports = {
     User,
