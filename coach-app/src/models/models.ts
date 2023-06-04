@@ -1,28 +1,53 @@
-const sequelize = require('../db');
+import { Table, Column, Model, DataType, ForeignKey } from 'sequelize-typescript';
 
-// Класс с помощу которого описываются типы того или инного поня
-const { DataTypes, TEXT } = require('sequelize');
-// Описываем модель пользователя
-const User = sequelize.define('user', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    socetId: { type: DataTypes.STRING, unique: true },
-  
-});
+@Table({ tableName: 'users' })
+export class User extends Model<User> {
+  @Column({
+    type: DataType.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  })
+  id: number;
 
-const Masage = sequelize.define('basket', {
-    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    masage:{ type: DataTypes.STRING },
-    author:{type: DataTypes.STRING},
-    userId:{type: DataTypes.INTEGER},
-    type:{type: DataTypes.STRING}, 
-});
+  @Column({
+    type: DataType.STRING,
+    unique: true,
+    field: 'socketId',
+  })
+  socketId: string;
+}
 
+@Table({ tableName: 'messages' })
+export class Message extends Model<Message> {
+  @Column({
+    type: DataType.INTEGER,
+    primaryKey: true,
+    autoIncrement: true,
+  })
+  id: number;
 
-User.hasMany(Masage);
-Masage.belongsTo(User);
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  message: string;
 
-module.exports = {
-    User,
-    Masage,
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  author: string;
 
-};
+  @ForeignKey(() => User)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  userId: number;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+  })
+  type: string;
+}

@@ -2,15 +2,16 @@ import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { IoAdapter } from '@nestjs/platform-socket.io';
 import { Server, Socket } from 'socket.io';
-// import { sequelize } from './db'; // Імпортуйте об'єкт sequelize з вашого файлу db.js
-import { sequelize } from '../db';
-// const sequelize = require('./db');
+import { Sequelize } from 'sequelize-typescript';
+import { sequelizeConfig } from './sequelize.config';
+import { User,  Message} from './models/models';
 
 import { onOpenAI } from './service';
 
 async function start() {
   const app = await NestFactory.create(AppModule);
   const server = app.getHttpServer();
+ 
   const io = new Server(server, {
     cors: {
       origin: '*',
@@ -42,8 +43,19 @@ async function start() {
   });
 
   // Перевірка підключення до бази даних та створення таблиць
+
+  const sequelize = new Sequelize(sequelizeConfig);
+  sequelize.addModels([User, Message]);
+
   await sequelize.authenticate();
-  await sequelize.sync();
+  sequelize
+    .sync({ alter: true })
+    .then(() => {
+      console.log('Database synchronized');
+    })
+    .catch((error) => {
+      console.error('Error synchronizing database:', error);
+    });
 
   await app.listen(5000);
   console.log('Server is running');
