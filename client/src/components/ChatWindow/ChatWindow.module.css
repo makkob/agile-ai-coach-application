@@ -107,7 +107,7 @@ white #f9f9f9 */
   width: fit-content;
   height: auto;
   min-height: 2rem;
-  background-color: rgb(254,226,197);
+  background-color: rgb(254, 226, 197);
   border-radius: 30px;
   -webkit-border-radius: 30px;
   -moz-border-radius: 30px;
@@ -128,10 +128,10 @@ white #f9f9f9 */
   height: 0;
   left: auto;
   right: -10px;
-  top: 38px;
+  top: 32px;
   bottom: auto;
   border: 12px solid;
-  border-color: rgb(254,226,197) transparent transparent rgb(254,226,197);
+  border-color: rgb(254, 226, 197) transparent transparent rgb(254, 226, 197);
 }
 
 .speechBubbleAI:after {
@@ -141,7 +141,7 @@ white #f9f9f9 */
   height: 0;
   left: -10px;
   right: auto;
-  top: 38px;
+  top: 32px;
   bottom: auto;
   border: 12px solid;
   border-color: rgb(196, 221, 255) rgb(196, 221, 255) transparent transparent;

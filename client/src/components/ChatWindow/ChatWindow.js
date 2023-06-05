@@ -59,12 +59,19 @@ export default function DialogComponent() {
       <div className={styles.chatWindow} id="chat-window">
         {loading && <p>Coach is typing...</p>}
         {dialog &&
-          dialog.map((item, index) => (
-            <p key={index} className={styles.speechBubbleUser}>
-              <strong>{item.sender}: </strong>
-              {item.message}
-            </p>
-          ))}
+          dialog.map((item, index) =>
+            item.sender === "CoachAI" ? (
+              <p key={index} className={styles.speechBubbleAI}>
+                <strong>{item.sender}: </strong>
+                {item.message}
+              </p>
+            ) : (
+              <p key={index} className={styles.speechBubbleUser}>
+                <strong>{item.sender}: </strong>
+                {item.message}
+              </p>
+            )
+          )}
       </div>
       <div className={styles.inputDiv}>
         <TextField
