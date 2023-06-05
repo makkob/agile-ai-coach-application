@@ -1,9 +1,10 @@
   
 
 import{Module} from "@nestjs/common"
-import { AppController } from "./app.controller";
-import { SocketGateway } from './socket.gateway';
+
 import { SequelizeModule } from '@nestjs/sequelize';
+import { UserService } from './service/user.service';
+import { DialogService } from './service/dialog.service';
 import { config } from 'dotenv';
 config();
 
@@ -22,8 +23,11 @@ config();
           
           
     ],
-    controllers:[AppController],
-    providers: [SocketGateway]
+   
+    providers: [UserService,
+         DialogService,
+       
+        ]
 })
 
 export class AppModule{}       

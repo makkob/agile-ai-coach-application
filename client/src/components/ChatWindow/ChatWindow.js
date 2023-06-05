@@ -6,7 +6,6 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { Button, TextField } from "@mui/material";
 import styles from "./ChatWindow.module.css";
 import { setDialog } from "../../actions/dialogAction";
-import { Container } from "@mui/system";
 
 export default function DialogComponent() {
   const dispatch = useDispatch();
@@ -15,7 +14,7 @@ export default function DialogComponent() {
   const { loading, dialog } = dialogState;
 
   const [inputValue, setInputValue] = useState("");
-  const [dialogHOOK, setDialogHOOK] = useState([]);
+
   const [socket, setSocket] = useState(null);
 
   useEffect(() => {
@@ -24,7 +23,7 @@ export default function DialogComponent() {
 
     // Прослушивание события 'message' от сервера
     socket.on("message", (data) => {
-      dispatch(setDialog(data));
+      dispatch(setDialog(data, "CoachAI"));
     });
 
     // Отключение от сервера при размонтировании компонента
@@ -40,7 +39,7 @@ export default function DialogComponent() {
   const handleSubmit = () => {
     // Добавление значения инпута в стейт
 
-    dispatch(setDialog(inputValue));
+    dispatch(setDialog(inputValue, "Client"));
     // Отправка сообщения на сервер
     socket.emit("message", inputValue);
 
@@ -61,8 +60,7 @@ export default function DialogComponent() {
         {loading && <p>Coach is typing...</p>}
         {dialog &&
           dialog.map((item, index) => (
-            // <p key={index} className={styles.speechBubbleUser}>
-            <p key={index} className={styles.speechBubbleAI}>
+            <p key={index} className={styles.speechBubbleUser}>
               <strong>{item.sender}: </strong>
               {item.message}
             </p>

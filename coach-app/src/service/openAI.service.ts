@@ -27,9 +27,6 @@ export async function onOpenAI(text) {
     "completion.data.choices[0].text",
     completion.data.choices[0].text
   );
-//   console.log(
-//     "completion",
-//     completion.data
-//   );
+
 return  completion.data.choices[0].text
 }
