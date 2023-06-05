@@ -81,6 +81,7 @@ export default function DialogComponent() {
           placeholder="Ask me anything that I can help you or your team..."
           variant="outlined"
           fullWidth
+          required
         />
         <Button onClick={handleSubmit}>
           <SendIcon />
