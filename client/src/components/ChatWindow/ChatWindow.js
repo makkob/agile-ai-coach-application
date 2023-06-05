@@ -21,12 +21,10 @@ export default function DialogComponent() {
     const socket = io("http://localhost:5000");
     setSocket(socket);
 
-    // Прослушивание события 'message' от сервера
     socket.on("message", (data) => {
       dispatch(setDialog(data, "CoachAI"));
     });
 
-    // Отключение от сервера при размонтировании компонента
     return () => {
       socket.close();
     };
@@ -37,13 +35,9 @@ export default function DialogComponent() {
   };
 
   const handleSubmit = () => {
-    // Добавление значения инпута в стейт
-
     dispatch(setDialog(inputValue, "Client"));
-    // Отправка сообщения на сервер
     socket.emit("message", inputValue);
 
-    // Очистка значения инпута
     setInputValue("");
   };
 

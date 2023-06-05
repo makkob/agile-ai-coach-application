@@ -27,33 +27,27 @@ async function start() {
   const userService = app.get(UserService); 
   const dialogService = app.get(DialogService); 
 
-  // Додайте обробник події 'connection'
   io.on('connection', async (socket: Socket) => {
     console.log('Client connected:', socket.id);
 
-    userService.createUserBySocketId(socket.id); // Use userService here
-   
+    userService.createUserBySocketId(socket.id); 
 
-    // Обробка події 'message' від клієнта
     socket.on('message', async (message: string) => {
       console.log('Received message from client:', message, 'Socet id :', socket.id);
       const userId = await (await userService.getUserBySocketId(socket.id)).dataValues.id;
       
       dialogService.saveMessageToDB(message, "Client", userId, "request");
       const response =  await onOpenAI(message);
-      // Обробка повідомлення і відправка відповіді клієнту
-      // const response = 'This is the response from the server ZAGLUSHKA';
+
       socket.emit('message', response);
       dialogService.saveMessageToDB(response, "CoachAI", userId, "response");
     });
 
-    // Обробка події відключення клієнта
     socket.on('disconnect', () => {
       console.log('Client disconnected:', socket.id);
     });
   });
 
-  // Перевірка підключення до бази даних та створення таблиць
 
   const sequelize = new Sequelize(sequelizeConfig);
   sequelize.addModels([User, Message]);
