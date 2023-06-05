@@ -1,3 +1,7 @@
+Required apps:
+OpenServer (to host database)
+NodeJS last LTS version (for npm command to work)
+
 How to launch:
 
 //front-end
